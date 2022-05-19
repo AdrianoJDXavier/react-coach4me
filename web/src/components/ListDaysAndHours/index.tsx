@@ -1,7 +1,7 @@
 import React from "react";
 import api from "../../services/api";
 import convertMinutesToHour from "../../utils/convertMinutesToHour";
-
+import convertNumberToDay from "../../utils/convertNumberToDay";
 
 export interface ListDaysAndHour {
   id: string;
@@ -28,7 +28,7 @@ const ListDaysAndHours: React.FC<DayHoursItemProps> = ({ listDaysHour }) => {
       <div className="agenda">
         <div className="header-day">Dias Disponíveis</div>
         <div className="content-day">
-          <p>{listDaysHour.week_day}</p>
+          <p>{convertNumberToDay(parseInt(listDaysHour.week_day))}</p>
           <p>{convertMinutesToHour(parseInt(listDaysHour.from))} até {convertMinutesToHour(parseInt(listDaysHour.to))}</p>
         </div>
       </div>
