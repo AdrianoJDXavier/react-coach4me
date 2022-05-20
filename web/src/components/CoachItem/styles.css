@@ -34,7 +34,7 @@
   margin-top: 0.4rem;
 }
 
-.coach-item > p {
+.coach-item>p {
   padding: 0 2rem;
   font-size: 1.6rem;
   line-height: 2.8rem;
@@ -76,13 +76,29 @@
   background: var(--color-secondary-dark);
 }
 
+.cards-list {
+  z-index: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.card-header {
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+}
+
 @media (min-width: 700px) {
+
   .coach-item header,
   .coach-item footer {
     padding: 3.2rem;
   }
 
-  .coach-item > p {
+  .coach-item>p {
     padding: 0 3.2rem;
   }
 

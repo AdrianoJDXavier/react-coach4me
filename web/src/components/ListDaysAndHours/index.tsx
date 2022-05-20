@@ -2,6 +2,7 @@ import React from "react";
 import api from "../../services/api";
 import convertMinutesToHour from "../../utils/convertMinutesToHour";
 import convertNumberToDay from "../../utils/convertNumberToDay";
+import "./styles.css";
 
 export interface ListDaysAndHour {
   id: string;
@@ -16,7 +17,6 @@ interface DayHoursItemProps {
 }
 
 const ListDaysAndHours: React.FC<DayHoursItemProps> = ({ listDaysHour }) => {
-  
   const coach_id = listDaysHour.id;
   const response = api.get("ListDaysAndHours", {
     params: { coach_id },
@@ -24,15 +24,15 @@ const ListDaysAndHours: React.FC<DayHoursItemProps> = ({ listDaysHour }) => {
 
   console.log(response);
   return (
-    <div>
-      <div className="agenda">
-        <div className="header-day">Dias Disponíveis</div>
-        <div className="content-day">
-          <p>{convertNumberToDay(parseInt(listDaysHour.week_day))}</p>
-          <p>{convertMinutesToHour(parseInt(listDaysHour.from))} até {convertMinutesToHour(parseInt(listDaysHour.to))}</p>
-        </div>
+    <div className="card">
+      <div className="card_title title-black">
+      <p>{convertNumberToDay(parseInt(listDaysHour.week_day))}</p>
+      <p>
+        {convertMinutesToHour(parseInt(listDaysHour.from))} até{" "}
+        {convertMinutesToHour(parseInt(listDaysHour.to))}
+      </p>
       </div>
-    </div>  
+    </div>
   );
 };
 

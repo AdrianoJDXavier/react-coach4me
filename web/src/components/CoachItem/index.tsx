@@ -56,11 +56,12 @@ const CoachItem: React.FC<CoachItemProps> = ({ coach }) => {
         </div>
       </header>
       <p>{coach.bio}</p>
-
-      {listDayHour.map((listDays: ListDaysAndHours) => {
-        return <ListDaysAndHours listDaysHour={listDays} />;
-      })}
-
+      <div className="cards-list">
+        <div className="card-header">Dias disponiveis</div>
+        {listDayHour.map((listDays: ListDaysAndHours) => {
+          return <ListDaysAndHours listDaysHour={listDays} />;
+        })}
+      </div>
       <footer>
         <p>
           Preço/Hora
