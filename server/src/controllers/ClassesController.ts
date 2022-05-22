@@ -37,7 +37,7 @@ export default class ClassesController {
       .where('classes.subject', '=', subject)
       .join('coaches', 'classes.coach_id', '=', 'coaches.id')
       .select(['classes.*', 'coaches.*']);
-
+console.log(classes)
     return response.json(classes);
   }
 

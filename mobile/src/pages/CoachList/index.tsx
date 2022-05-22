@@ -3,14 +3,11 @@ import { ScrollView, View, Text, TextInput } from 'react-native';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import api from '../../services/api';
-
 import CoachItem, { Coach } from '../../components/CoachItem';
 import PageHeader from '../../components/PageHeader';
-
 import styles from './styles';
 import { useFocusEffect } from '@react-navigation/native';
+import api from '../../services/api';
 
 
 function CoachList() {
@@ -21,7 +18,8 @@ function CoachList() {
   const [subject, setSubject] = useState('');
   const [week_day, setWeekDay] = useState('');
   const [time, setTime] = useState('');
-
+console.log(coaches)
+console.log(subject)
   function loadFavorites() {
     AsyncStorage.getItem('favorites').then(response => {
       if (response) {
@@ -48,12 +46,12 @@ function CoachList() {
 
     const response = await api.get('classes', {
       params: {
-        subject,
-        week_day,
-        time,
+        subject: 'Biologia',
+        week_day: '0',
+        time: '09:00',
       }
     });
-
+    console.log('teste');
     setIsFiltersVisible(false);
     setCoaches(response.data);
   }

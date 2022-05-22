@@ -1,14 +1,14 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useState } from 'react';
-import { View, Image, Text, Linking } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState } from "react";
+import { View, Image, Text, Linking } from "react-native";
+import { RectButton } from "react-native-gesture-handler";
+import heartOutlineIcon from "../../assets/images/icons/heart-outline.png";
+import unfavoriteIcon from "../../assets/images/icons/unfavorite.png";
+import whatsappIcon from "../../assets/images/icons/whatsapp.png";
+import api from "../../services/api";
+import ListDaysAndHours from "../ListDaysAndHours";
 
-import heartOutlineIcon from '../../assets/images/icons/heart-outline.png'
-import unfavoriteIcon from '../../assets/images/icons/unfavorite.png'
-import whatsappIcon from '../../assets/images/icons/whatsapp.png'
-import api from '../../services/api';
-
-import styles from './styles';
+import styles from "./styles";
 
 export interface Coach {
   id: number;
@@ -25,19 +25,41 @@ interface CoachItemProps {
   favorited: boolean;
 }
 
+export interface ListDaysAndHours {
+  id: string;
+  week_day: string;
+  from: string;
+  to: string;
+  class_id: string;
+}
+
+interface CoachItemProps {
+  coach: Coach;
+}
+
 const CoachItem: React.FC<CoachItemProps> = ({ coach, favorited }) => {
   const [isFavorited, setIsFavorited] = useState(favorited);
-  
+
   function handleLinkToWhatsapp() {
-    api.post('connections', {
+    api.post("connections", {
       coach_id: coach.id,
     });
 
     Linking.openURL(`whatsapp://send?phone=${coach.whatsapp}`);
   }
 
+  const [listDayHour, setCoaches] = useState([]);
+  listDays(coach.id);
+  async function listDays(coach_id: number) {
+    const response = await api.get("ListDaysAndHours", {
+      params: { coach_id },
+    });
+
+    setCoaches(response.data);
+  }
+
   async function handleToggleFavorite() {
-    const favorites = await AsyncStorage.getItem('favorites');
+    const favorites = await AsyncStorage.getItem("favorites");
 
     let favoritesArray = [];
 
@@ -59,16 +81,13 @@ const CoachItem: React.FC<CoachItemProps> = ({ coach, favorited }) => {
       setIsFavorited(true);
     }
 
-    await AsyncStorage.setItem('favorites', JSON.stringify(favoritesArray));
+    await AsyncStorage.setItem("favorites", JSON.stringify(favoritesArray));
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.profile}>
-        <Image 
-          style={styles.avatar}
-          source={{ uri: coach.avatar }}
-        />
+        <Image style={styles.avatar} source={{ uri: coach.avatar }} />
 
         <View style={styles.profileInfo}>
           <Text style={styles.name}>{coach.name}</Text>
@@ -76,40 +95,43 @@ const CoachItem: React.FC<CoachItemProps> = ({ coach, favorited }) => {
         </View>
       </View>
 
-      <Text style={styles.bio}>
-        {coach.bio}
-      </Text>
+      <Text style={styles.bio}>{coach.bio}</Text>
 
       <View style={styles.footer}>
         <Text style={styles.price}>
-          Preço/hora {'   '}
+          Preço/hora {"   "}
           <Text style={styles.priceValue}>R$ {coach.cost}</Text>
         </Text>
 
+        <View>
+          {listDayHour.map((listDays: ListDaysAndHours) => {
+            return <ListDaysAndHours listDaysHour={listDays} />;
+          })}
+        </View>
+
         <View style={styles.buttonsContainer}>
-          <RectButton 
+          <RectButton
             onPress={handleToggleFavorite}
-            style={[
-              styles.favoriteButton, 
-              isFavorited ? styles.favorited : {}
-            ]}
+            style={[styles.favoriteButton, isFavorited ? styles.favorited : {}]}
           >
-            { isFavorited
-              ? <Image source={unfavoriteIcon} />
-              : <Image source={heartOutlineIcon} />
-            }
+            {isFavorited ? (
+              <Image source={unfavoriteIcon} />
+            ) : (
+              <Image source={heartOutlineIcon} />
+            )}
           </RectButton>
 
-          <RectButton onPress={handleLinkToWhatsapp} style={styles.contactButton}>
+          <RectButton
+            onPress={handleLinkToWhatsapp}
+            style={styles.contactButton}
+          >
             <Image source={whatsappIcon} />
             <Text style={styles.contactButtonText}>Entrar em contato</Text>
           </RectButton>
         </View>
       </View>
-
-
     </View>
   );
-}
+};
 
 export default CoachItem;
