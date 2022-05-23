@@ -18,8 +18,7 @@ function CoachList() {
   const [subject, setSubject] = useState('');
   const [week_day, setWeekDay] = useState('');
   const [time, setTime] = useState('');
-console.log(coaches)
-console.log(subject)
+
   function loadFavorites() {
     AsyncStorage.getItem('favorites').then(response => {
       if (response) {
@@ -51,7 +50,6 @@ console.log(subject)
         time: '09:00',
       }
     });
-    console.log('teste');
     setIsFiltersVisible(false);
     setCoaches(response.data);
   }

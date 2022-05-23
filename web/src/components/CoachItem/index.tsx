@@ -57,7 +57,7 @@ const CoachItem: React.FC<CoachItemProps> = ({ coach }) => {
       </header>
       <p>{coach.bio}</p>
       <div className="cards-list">
-        <div className="card-header">Dias disponiveis</div>
+        <hr></hr>
         {listDayHour.map((listDays: ListDaysAndHours) => {
           return <ListDaysAndHours listDaysHour={listDays} />;
         })}

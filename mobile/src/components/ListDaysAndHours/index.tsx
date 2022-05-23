@@ -25,19 +25,19 @@ const ListDaysAndHours: React.FC<DayHoursItemProps> = ({ listDaysHour }) => {
   console.log(response);
   return (
     <View>
-      <Text style={styles.price}>
+      <Text style={styles.dayhour}>
         Disponível{" "}
-        <Text style={styles.priceValue}>
+        <Text style={styles.dayhourValue}>
           {convertNumberToDay(parseInt(listDaysHour.week_day))}
         </Text>
       </Text>
-      <Text style={styles.price}>
+      <Text style={styles.dayhour}>
         Horário{" "}
-        <Text style={styles.priceValue}>
+        <Text style={styles.dayhourValue}>
           {convertMinutesToHour(parseInt(listDaysHour.from))}
         </Text>{" "}
         até{" "}
-        <Text style={styles.priceValue}>
+        <Text style={styles.dayhourValue}>
           {convertMinutesToHour(parseInt(listDaysHour.to))}
         </Text>
       </Text>

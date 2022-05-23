@@ -37,7 +37,6 @@ export default class ClassesController {
       .where('classes.subject', '=', subject)
       .join('coaches', 'classes.coach_id', '=', 'coaches.id')
       .select(['classes.*', 'coaches.*']);
-console.log(classes)
     return response.json(classes);
   }
 
@@ -98,7 +97,7 @@ console.log(classes)
   async ListDaysAndHours(request: Request, response: Response) {
     const filters = request.query;
     const coach_id = filters.coach_id as string;
-    
+
     if ((!filters.coach_id)) {
       return response.status(400).json({
         error: 'Missing filters to search days and hours'

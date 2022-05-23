@@ -24,13 +24,22 @@ const ListDaysAndHours: React.FC<DayHoursItemProps> = ({ listDaysHour }) => {
 
   console.log(response);
   return (
-    <div className="card">
-      <div className="card_title title-black">
-      <p>{convertNumberToDay(parseInt(listDaysHour.week_day))}</p>
-      <p>
-        {convertMinutesToHour(parseInt(listDaysHour.from))} até{" "}
-        {convertMinutesToHour(parseInt(listDaysHour.to))}
-      </p>
+    <div className="listdayhour" >
+      <div className="dayhour">
+        Disponível{" "}
+        <span className="dayhourValue">
+          {convertNumberToDay(parseInt(listDaysHour.week_day))}
+        </span>
+      </div>
+      <div className="dayhour">
+        Horário{" "}
+        <span className="dayhourValue">
+          {convertMinutesToHour(parseInt(listDaysHour.from))}
+        </span>{" "}
+        até{" "}
+        <span className="dayhourValue">
+          {convertMinutesToHour(parseInt(listDaysHour.to))}
+        </span>
       </div>
     </div>
   );
